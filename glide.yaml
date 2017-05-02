@@ -1,0 +1,55 @@
+package: blueprint
+import:
+- package: github.com/blue-jay/blueprint
+  version: ^1.0.0
+  subpackages:
+  - controller
+  - controller/about
+  - controller/debug
+  - controller/home
+  - controller/login
+  - controller/notepad
+  - controller/register
+  - controller/static
+  - controller/status
+  - lib/boot
+  - lib/env
+  - lib/flight
+  - middleware/acl
+  - middleware/logrequest
+  - middleware/rest
+  - model/note
+  - model/user
+  - viewfunc/link
+  - viewfunc/noescape
+  - viewfunc/prettytime
+  - viewmodify/authlevel
+  - viewmodify/flash
+  - viewmodify/uri
+- package: github.com/blue-jay/core
+  subpackages:
+  - asset
+  - email
+  - flash
+  - form
+  - generate
+  - jsonconfig
+  - pagination
+  - passhash
+  - router
+  - server
+  - session
+  - storage/driver/mysql
+  - view
+  - xsrf
+- package: github.com/go-sql-driver/mysql
+  version: ^1.3.0
+- package: github.com/gorilla/context
+  version: ^1.1.0
+- package: github.com/gorilla/csrf
+  version: ^1.5.0
+- package: github.com/gorilla/sessions
+  version: ^1.1.0
+- package: github.com/husobee/vestigo
+  version: ^1.0.1
+- package: github.com/jmoiron/sqlx

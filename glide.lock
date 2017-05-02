@@ -1,0 +1,82 @@
+hash: b411072cb0ddac8333e4a18e5b7314e3300120cd76e4beb83bedcb8e1255825a
+updated: 2017-05-03T00:32:43.447072786+07:00
+imports:
+- name: github.com/blue-jay/blueprint
+  version: e65ca2be88e353b2bad9c57b1c3c8f2e0e2a46ff
+  subpackages:
+  - controller
+  - controller/about
+  - controller/debug
+  - controller/home
+  - controller/login
+  - controller/notepad
+  - controller/register
+  - controller/static
+  - controller/status
+  - lib/boot
+  - lib/env
+  - lib/flight
+  - middleware/acl
+  - middleware/logrequest
+  - middleware/rest
+  - model/note
+  - model/user
+  - viewfunc/link
+  - viewfunc/noescape
+  - viewfunc/prettytime
+  - viewmodify/authlevel
+  - viewmodify/flash
+  - viewmodify/uri
+- name: github.com/blue-jay/core
+  version: a77540ec92c68c34c9c4dfa83ab700303fcb12c0
+  subpackages:
+  - asset
+  - email
+  - file
+  - flash
+  - form
+  - generate
+  - jsonconfig
+  - pagination
+  - passhash
+  - router
+  - server
+  - session
+  - storage
+  - storage/driver/mysql
+  - storage/driver/postgresql
+  - storage/migration
+  - storage/migration/mysql
+  - uuid
+  - view
+  - xsrf
+- name: github.com/go-sql-driver/mysql
+  version: a0583e0143b1624142adab07e0e97fe106d99561
+- name: github.com/gorilla/context
+  version: 1ea25387ff6f684839d82767c1733ff4d4d15d0a
+- name: github.com/gorilla/csrf
+  version: 69581736821c33d85bbf378f42f6ad864dbd85de
+- name: github.com/gorilla/securecookie
+  version: e59506cc896acb7f7bf732d4fdf5e25f7ccd8983
+- name: github.com/gorilla/sessions
+  version: ca9ada44574153444b00d3fd9c8559e4cc95f896
+- name: github.com/husobee/vestigo
+  version: 9dfd4d2384383143ae77e2dd52fe0cdb71470b98
+- name: github.com/jmoiron/sqlx
+  version: d9bd385d68c068f1fabb5057e3dedcbcbb039d0f
+  subpackages:
+  - reflectx
+- name: github.com/justinas/alice
+  version: 1051eaf52fcafdd87ead59d28b065f1fcb8274ec
+- name: github.com/lib/pq
+  version: 2704adc878c21e1329f46f6e56a1c387d788ff94
+  subpackages:
+  - oid
+- name: github.com/pkg/errors
+  version: ff09b135c25aae272398c51a07235b90a75aa4f0
+- name: golang.org/x/crypto
+  version: 527d12e53572562de9fd348d50e1ee4096803cec
+  subpackages:
+  - bcrypt
+  - blowfish
+testImports: []
