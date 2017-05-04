@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/blue-jay/blueprint/controller"
+	"github.com/blue-jay/blueprint/lib/db"
 	"github.com/blue-jay/blueprint/lib/env"
 	"github.com/blue-jay/blueprint/lib/flight"
 	"github.com/blue-jay/blueprint/viewfunc/link"
@@ -28,7 +29,10 @@ func RegisterServices(config *env.Info) {
 	}
 
 	// Connect to the MySQL database
-	mysqlDB, _ := config.MySQL.Connect(true)
+	mysqlDB, err := db.Connect(config.MySQL, true)
+	if err != nil {
+		log.Fatal("Failed to connect to the database: " + err.Error())
+	}
 
 	// Load the controller routes
 	controller.LoadRoutes()
