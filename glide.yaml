@@ -1,31 +1,5 @@
-package: blueprint
+package: github.com/blue-jay/blueprint
 import:
-- package: github.com/blue-jay/blueprint
-  version: ^1.0.0
-  subpackages:
-  - controller
-  - controller/about
-  - controller/debug
-  - controller/home
-  - controller/login
-  - controller/notepad
-  - controller/register
-  - controller/static
-  - controller/status
-  - lib/boot
-  - lib/env
-  - lib/flight
-  - middleware/acl
-  - middleware/logrequest
-  - middleware/rest
-  - model/note
-  - model/user
-  - viewfunc/link
-  - viewfunc/noescape
-  - viewfunc/prettytime
-  - viewmodify/authlevel
-  - viewmodify/flash
-  - viewmodify/uri
 - package: github.com/blue-jay/core
   subpackages:
   - asset

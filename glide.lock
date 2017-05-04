@@ -1,32 +1,6 @@
-hash: b5a753baf0103477fe9f91dae2c25fd81f2eb02070752a65c5193a56f1669a94
-updated: 2017-05-04T15:18:18.969168873+07:00
+hash: f473db0c5db5025c215d69396aff8ddc64e8a637980a9f1274d591ab5dadb479
+updated: 2017-05-04T15:25:50.193448069+07:00
 imports:
-- name: github.com/blue-jay/blueprint
-  version: e65ca2be88e353b2bad9c57b1c3c8f2e0e2a46ff
-  subpackages:
-  - controller
-  - controller/about
-  - controller/debug
-  - controller/home
-  - controller/login
-  - controller/notepad
-  - controller/register
-  - controller/static
-  - controller/status
-  - lib/boot
-  - lib/env
-  - lib/flight
-  - middleware/acl
-  - middleware/logrequest
-  - middleware/rest
-  - model/note
-  - model/user
-  - viewfunc/link
-  - viewfunc/noescape
-  - viewfunc/prettytime
-  - viewmodify/authlevel
-  - viewmodify/flash
-  - viewmodify/uri
 - name: github.com/blue-jay/core
   version: a77540ec92c68c34c9c4dfa83ab700303fcb12c0
   subpackages:
