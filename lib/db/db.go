@@ -8,8 +8,8 @@ import (
 )
 
 // Connect connects to the database specified in the config.
+// FIXME: Refactor this to use only dbr without sqlx. sqlx is only left for testing purposes.
 func Connect(conf mysql.Info, specificDatabase bool) (*dbr.Connection, error) {
-	// FIXME: Refactor this to use only dbr without sqlx.
 	sqlxConn, err := conf.Connect(specificDatabase)
 	if err != nil {
 		return nil, err

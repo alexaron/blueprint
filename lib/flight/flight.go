@@ -66,6 +66,11 @@ func Context(w http.ResponseWriter, r *http.Request) Info {
 	}
 
 	mutex.RLock()
+	// If dbInfo wasn't stored, no need to create a new db session.
+	var db *dbr.Session
+	if dbInfo != nil {
+		db = dbInfo.NewSession(nil)
+	}
 	i := Info{
 		Config: configInfo,
 		Sess:   sess,
@@ -73,7 +78,7 @@ func Context(w http.ResponseWriter, r *http.Request) Info {
 		W:      w,
 		R:      r,
 		View:   configInfo.View,
-		DB: dbInfo.NewSession(nil),
+		DB:     db,
 	}
 	mutex.RUnlock()
 
