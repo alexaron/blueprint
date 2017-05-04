@@ -1,12 +1,11 @@
-hash: f473db0c5db5025c215d69396aff8ddc64e8a637980a9f1274d591ab5dadb479
-updated: 2017-05-04T15:25:50.193448069+07:00
+hash: 532ae6eeadd0775b946a3247f39bc9842f6039a6557c5e8e410afb14b2afdd18
+updated: 2017-05-04T16:05:22.081758367+07:00
 imports:
 - name: github.com/blue-jay/core
   version: a77540ec92c68c34c9c4dfa83ab700303fcb12c0
   subpackages:
   - asset
   - email
-  - file
   - flash
   - form
   - generate
@@ -16,12 +15,7 @@ imports:
   - router
   - server
   - session
-  - storage
   - storage/driver/mysql
-  - storage/driver/postgresql
-  - storage/migration
-  - storage/migration/mysql
-  - uuid
   - view
   - xsrf
 - name: github.com/go-sql-driver/mysql
@@ -32,29 +26,10 @@ imports:
   version: 1ea25387ff6f684839d82767c1733ff4d4d15d0a
 - name: github.com/gorilla/csrf
   version: 69581736821c33d85bbf378f42f6ad864dbd85de
-- name: github.com/gorilla/securecookie
-  version: e59506cc896acb7f7bf732d4fdf5e25f7ccd8983
 - name: github.com/gorilla/sessions
   version: ca9ada44574153444b00d3fd9c8559e4cc95f896
 - name: github.com/husobee/vestigo
-  version: 9dfd4d2384383143ae77e2dd52fe0cdb71470b98
+  version: 23d011ed4e5ec0f73678c48df5ca8b7ace92f8d0
 - name: github.com/jmoiron/sqlx
   version: d9bd385d68c068f1fabb5057e3dedcbcbb039d0f
-  subpackages:
-  - reflectx
-- name: github.com/justinas/alice
-  version: 1051eaf52fcafdd87ead59d28b065f1fcb8274ec
-- name: github.com/lib/pq
-  version: 2704adc878c21e1329f46f6e56a1c387d788ff94
-  subpackages:
-  - oid
-- name: github.com/pkg/errors
-  version: ff09b135c25aae272398c51a07235b90a75aa4f0
-- name: golang.org/x/crypto
-  version: 04eae0b62feaaf659a0ce2c4e8dc70b6ae2fff67
-  subpackages:
-  - bcrypt
-  - blowfish
-- name: gopkg.in/gomail.v2
-  version: 81ebce5c23dfd25c6c67194b37d3dd3f338c98b1
 testImports: []

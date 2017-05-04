@@ -25,9 +25,7 @@ import:
 - package: github.com/gorilla/sessions
   version: ^1.1.0
 - package: github.com/husobee/vestigo
-  version: ^1.0.1
+  version: master
 - package: github.com/jmoiron/sqlx
 - package: github.com/gocraft/dbr
   version: ^2.1.0
-- package: gopkg.in/gomail.v2
-  version: ^2.0.0
