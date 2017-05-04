@@ -1,5 +1,5 @@
-hash: 0eeeffe3300f8582f8dabf47c6ca038486a38a983f3f0ee22e82cc25feb0950f
-updated: 2017-05-03T00:35:04.468766323+07:00
+hash: b5a753baf0103477fe9f91dae2c25fd81f2eb02070752a65c5193a56f1669a94
+updated: 2017-05-04T15:18:18.969168873+07:00
 imports:
 - name: github.com/blue-jay/blueprint
   version: e65ca2be88e353b2bad9c57b1c3c8f2e0e2a46ff
@@ -77,8 +77,10 @@ imports:
 - name: github.com/pkg/errors
   version: ff09b135c25aae272398c51a07235b90a75aa4f0
 - name: golang.org/x/crypto
-  version: 527d12e53572562de9fd348d50e1ee4096803cec
+  version: 04eae0b62feaaf659a0ce2c4e8dc70b6ae2fff67
   subpackages:
   - bcrypt
   - blowfish
+- name: gopkg.in/gomail.v2
+  version: 81ebce5c23dfd25c6c67194b37d3dd3f338c98b1
 testImports: []
