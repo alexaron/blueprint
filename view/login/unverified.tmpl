@@ -1,0 +1,24 @@
+{{define "title"}}Verify Your Email{{end}}
+{{define "head"}}{{end}}
+{{define "content"}}
+	<div class="page-header">
+		<h1>{{template "title" .}}</h1>
+	</div>
+
+    <p>
+        A verification letter was sent to your email, please, check your mailbox.
+        If you haven't received any letters, click a button below to resend it.
+	</p>
+
+    <form method="post" action="/resend_code">
+        <input type="hidden" name="email" value="{{$.email}}">
+
+        <input type="submit" class="btn btn-primary" value="Resend Verification Code" class="button" />
+
+        <input type="hidden" name="_token" value="{{$.token}}">
+        <input type="hidden" name="_method" value="POST">
+    </form>
+
+	{{template "footer" .}}
+{{end}}
+{{define "foot"}}{{end}}

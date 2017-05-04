@@ -32,6 +32,8 @@ CREATE TABLE user (
     last_name VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL,
     password CHAR(60) NOT NULL,
+    verification_code VARCHAR(128) NOT NULL,
+    verified BOOL NOT NULL DEFAULT false,
     
     status_id INT(10) UNSIGNED NOT NULL DEFAULT 1,
     
@@ -40,6 +42,7 @@ CREATE TABLE user (
     deleted_at TIMESTAMP NULL DEFAULT NULL,
     
     UNIQUE KEY (email),
+    UNIQUE KEY (verification_code),
     CONSTRAINT `f_user_status` FOREIGN KEY (`status_id`) REFERENCES `user_status` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
     
     PRIMARY KEY (id)

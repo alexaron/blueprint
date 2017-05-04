@@ -3,9 +3,11 @@ package register
 
 import (
 	"errors"
+	"log"
 	"net/http"
 
 	"github.com/blue-jay/blueprint/lib/flight"
+	"github.com/blue-jay/blueprint/lib/mail"
 	"github.com/blue-jay/blueprint/middleware/acl"
 	"github.com/blue-jay/blueprint/model/user"
 
@@ -69,9 +71,18 @@ func Store(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			c.FlashErrorGeneric(err)
 		} else {
-			c.FlashSuccess("Account created successfully for: " + email)
-			http.Redirect(w, r, "/login", http.StatusFound)
-			return
+			u, _, err := user.ByEmail(c.DB, email)
+			if err != nil {
+				c.FlashErrorGeneric(err)
+			} else {
+				if err := mail.SendVerification(c.Config, email, u.VerificationCode); err != nil {
+					// This error is not critical just log it (a user can resend verification email).
+					log.Println("Error sending email during registration: " + err.Error())
+				}
+				c.FlashSuccess("You have successfully been registered.")
+				http.Redirect(w, r, "/awaiting_verification", http.StatusFound)
+				return
+			}
 		}
 	} else if err != nil { // Catch all other errors
 		c.FlashErrorGeneric(err)
