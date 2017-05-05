@@ -3,7 +3,6 @@ package note
 
 import (
 	"database/sql"
-	"fmt"
 
 	"github.com/gocraft/dbr"
 )
@@ -72,52 +71,35 @@ func ByUserIDCount(db *dbr.Session, userID string) (int, error) {
 
 // Create adds an item.
 func Create(db *dbr.Session, name string, userID string) (sql.Result, error) {
-	result, err := db.Exec(fmt.Sprintf(`
-		INSERT INTO %v
-		(name, user_id)
-		VALUES
-		(?,?)
-		`, table),
-		name, userID)
-	return result, err
+	return db.
+		InsertInto(table).
+		Columns("name", "user_id").
+		Values(name, userID).
+		Exec()
 }
 
 // Update makes changes to an existing item.
 func Update(db *dbr.Session, name string, ID string, userID string) (sql.Result, error) {
-	result, err := db.Exec(fmt.Sprintf(`
-		UPDATE %v
-		SET name = ?
-		WHERE id = ?
-			AND user_id = ?
-			AND deleted_at IS NULL
-		LIMIT 1
-		`, table),
-		name, ID, userID)
-	return result, err
+	return db.
+		Update(table).
+		Set("name", name).
+		Where("id = ? AND user_id = ? AND deleted_at IS NULL", ID, userID).
+		Exec()
 }
 
 // DeleteHard removes an item.
 func DeleteHard(db *dbr.Session, ID string, userID string) (sql.Result, error) {
-	result, err := db.Exec(fmt.Sprintf(`
-		DELETE FROM %v
-		WHERE id = ?
-			AND user_id = ?
-			AND deleted_at IS NULL
-		`, table),
-		ID, userID)
-	return result, err
+	return db.
+		DeleteFrom(table).
+		Where("id = ? AND user_id = ? AND deleted_at IS NULL", ID, userID).
+		Exec()
 }
 
 // DeleteSoft marks an item as removed.
 func DeleteSoft(db *dbr.Session, ID string, userID string) (sql.Result, error) {
-	result, err := db.Exec(fmt.Sprintf(`
-		UPDATE %v
-		SET deleted_at = NOW()
-		WHERE id = ?
-			AND user_id = ?
-			AND deleted_at IS NULL
-		LIMIT 1
-		`, table),
-		ID, userID)
-	return result, err
+	return db.
+		Update(table).
+		Set("deleted_at", "NOW()").
+		Where("id = ? AND user_id = ? AND deleted_at IS NULL", ID, userID).
+		Exec()
 }

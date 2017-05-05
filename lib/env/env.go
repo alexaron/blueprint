@@ -4,6 +4,7 @@ package env
 import (
 	"encoding/json"
 
+	"fmt"
 	"github.com/blue-jay/core/asset"
 	"github.com/blue-jay/core/email"
 	"github.com/blue-jay/core/form"
@@ -11,7 +12,6 @@ import (
 	"github.com/blue-jay/core/jsonconfig"
 	"github.com/blue-jay/core/server"
 	"github.com/blue-jay/core/session"
-	"github.com/blue-jay/core/storage/driver/mysql"
 	"github.com/blue-jay/core/view"
 )
 
@@ -25,12 +25,38 @@ type Info struct {
 	Email      email.Info    `json:"Email"`
 	Form       form.Info     `json:"Form"`
 	Generation generate.Info `json:"Generation"`
-	MySQL      mysql.Info    `json:"MySQL"`
+	PostgreSQL PostgreSQL    `json:"PostgreSQL"`
 	Server     server.Info   `json:"Server"`
 	Session    session.Info  `json:"Session"`
 	Template   view.Template `json:"Template"`
 	View       view.Info     `json:"View"`
 	path       string
+}
+
+// PostgreSQL stores postgres configuration.
+type PostgreSQL struct {
+	Hostname string `json:"Hostname"`
+	Port     int    `json:"Port"`
+	Username string `json:"Username"`
+	Password string `json:"Password"`
+	Database string `json:"Database"`
+	SSLMode  bool   `json:"SSLMode"`
+}
+
+// DSN creates a connection string
+func (p PostgreSQL) DSN() string {
+	dsn := fmt.Sprintf(
+		"postgres://%s:%s@%s:%d/%s",
+		p.Username,
+		p.Password,
+		p.Hostname,
+		p.Port,
+		p.Database,
+	)
+	if !p.SSLMode {
+		dsn += "?sslmode=disable"
+	}
+	return dsn
 }
 
 // Path returns the env.json path

@@ -34,7 +34,7 @@ func ByEmail(db *dbr.Session, email string) (Item, bool, error) {
 	result := Item{}
 	err := db.
 		Select("*").
-		From(table).
+		From(dbr.I(table)). // user is a reserved word in PostgreSQL, needs quoting.
 		Where("email = ? AND deleted_at IS NULL", email).
 		Limit(1).
 		LoadStruct(&result)
@@ -46,7 +46,7 @@ func ByCode(db *dbr.Session, code string) (Item, bool, error) {
 	result := Item{}
 	err := db.
 		Select("*").
-		From(table).
+		From(dbr.I(table)).
 		Where("verification_code = ? AND deleted_at IS NULL", code).
 		Limit(1).
 		LoadStruct(&result)

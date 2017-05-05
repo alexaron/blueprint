@@ -31,7 +31,7 @@ func setup() {
 	_, conf := mysql.SetUp("../../env.json.example", "database_test")
 
 	// Connect to the database
-	d, _ := db.Connect(conf.Info, true)
+	d, _ := db.Connect(conf.Info)
 	testDb = d.NewSession(nil)
 }
 

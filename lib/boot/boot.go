@@ -28,8 +28,8 @@ func RegisterServices(config *env.Info) {
 		log.Fatal(err)
 	}
 
-	// Connect to the MySQL database
-	mysqlDB, err := db.Connect(config.MySQL, true)
+	// Connect to the PostgreSQL database
+	postgresDB, err := db.Connect(config.PostgreSQL)
 	if err != nil {
 		log.Fatal("Failed to connect to the database: " + err.Error())
 	}
@@ -62,7 +62,7 @@ func RegisterServices(config *env.Info) {
 	flight.StoreConfig(*config)
 
 	// Store the database connection in flight
-	flight.StoreDB(mysqlDB)
+	flight.StoreDB(postgresDB)
 
 	// Store the csrf information
 	flight.StoreXsrf(xsrf.Info{
