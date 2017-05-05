@@ -5,7 +5,7 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/go-sql-driver/mysql"
+	"github.com/gocraft/dbr"
 )
 
 var (
@@ -18,9 +18,9 @@ type Item struct {
 	ID        uint32         `db:"id"`
 	Name      string         `db:"name"`
 	UserID    uint32         `db:"user_id"`
-	CreatedAt mysql.NullTime `db:"created_at"`
-	UpdatedAt mysql.NullTime `db:"updated_at"`
-	DeletedAt mysql.NullTime `db:"deleted_at"`
+	CreatedAt dbr.NullTime `db:"created_at"`
+	UpdatedAt dbr.NullTime `db:"updated_at"`
+	DeletedAt dbr.NullTime `db:"deleted_at"`
 }
 
 // Connection is an interface for making queries.

@@ -2,8 +2,7 @@
 package userstatus
 
 import (
-	"database/sql"
-	"time"
+	"github.com/gocraft/dbr"
 )
 
 var (
@@ -13,16 +12,9 @@ var (
 
 // Item defines the model
 type Item struct {
-	ID        uint8     `db:"id"`
-	Status    string    `db:"status"`
-	CreatedAt time.Time `db:"created_at"`
-	UpdatedAt time.Time `db:"updated_at"`
-	DeletedAt time.Time `db:"deleted_at"`
-}
-
-// Connection is an interface for making queries.
-type Connection interface {
-	Exec(query string, args ...interface{}) (sql.Result, error)
-	Get(dest interface{}, query string, args ...interface{}) error
-	Select(dest interface{}, query string, args ...interface{}) error
+	ID        uint8        `db:"id"`
+	Status    string       `db:"status"`
+	CreatedAt dbr.NullTime `db:"created_at"`
+	UpdatedAt dbr.NullTime `db:"updated_at"`
+	DeletedAt dbr.NullTime `db:"deleted_at"`
 }

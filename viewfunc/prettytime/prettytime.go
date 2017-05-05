@@ -5,7 +5,7 @@ package prettytime
 import (
 	"html/template"
 
-	"github.com/go-sql-driver/mysql"
+	"github.com/gocraft/dbr"
 )
 
 // Map returns a template.FuncMap for NULLTIME and PRETTYTIME which outputs a
@@ -13,14 +13,14 @@ import (
 func Map() template.FuncMap {
 	f := make(template.FuncMap)
 
-	f["NULLTIME"] = func(t mysql.NullTime) string {
+	f["NULLTIME"] = func(t dbr.NullTime) string {
 		if t.Valid {
 			return t.Time.Format("3:04 PM 01/02/2006")
 		}
 		return "null"
 	}
 
-	f["PRETTYTIME"] = func(createdAt mysql.NullTime, updatedAt mysql.NullTime) string {
+	f["PRETTYTIME"] = func(createdAt dbr.NullTime, updatedAt dbr.NullTime) string {
 		if updatedAt.Valid {
 			return updatedAt.Time.Format("3:04 PM 01/02/2006")
 		}

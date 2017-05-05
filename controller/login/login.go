@@ -55,6 +55,12 @@ func Store(w http.ResponseWriter, r *http.Request) {
 		// Display error message
 		c.FlashErrorGeneric(err)
 	} else if passhash.MatchString(result.Password, password) {
+		if !result.Verified {
+			v := c.View.New("login/unverified")
+			v.Vars["email"] = email
+			v.Render(w, r)
+			return
+		}
 		if result.StatusID != 1 {
 			// User inactive and display inactive message
 			c.FlashNotice("Account is inactive so login is disabled.")

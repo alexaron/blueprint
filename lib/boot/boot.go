@@ -5,6 +5,7 @@ import (
 	"log"
 
 	"github.com/blue-jay/blueprint/controller"
+	"github.com/blue-jay/blueprint/lib/db"
 	"github.com/blue-jay/blueprint/lib/env"
 	"github.com/blue-jay/blueprint/lib/flight"
 	"github.com/blue-jay/blueprint/viewfunc/link"
@@ -27,8 +28,11 @@ func RegisterServices(config *env.Info) {
 		log.Fatal(err)
 	}
 
-	// Connect to the MySQL database
-	mysqlDB, _ := config.MySQL.Connect(true)
+	// Connect to the PostgreSQL database
+	postgresDB, err := db.Connect(config.PostgreSQL)
+	if err != nil {
+		log.Fatal("Failed to connect to the database: " + err.Error())
+	}
 
 	// Load the controller routes
 	controller.LoadRoutes()
@@ -58,7 +62,7 @@ func RegisterServices(config *env.Info) {
 	flight.StoreConfig(*config)
 
 	// Store the database connection in flight
-	flight.StoreDB(mysqlDB)
+	flight.StoreDB(postgresDB)
 
 	// Store the csrf information
 	flight.StoreXsrf(xsrf.Info{

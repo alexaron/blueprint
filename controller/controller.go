@@ -10,6 +10,7 @@ import (
 	"github.com/blue-jay/blueprint/controller/register"
 	"github.com/blue-jay/blueprint/controller/static"
 	"github.com/blue-jay/blueprint/controller/status"
+	"github.com/blue-jay/blueprint/controller/verifyemail"
 )
 
 // LoadRoutes loads the routes for each of the controllers.
@@ -17,6 +18,7 @@ func LoadRoutes() {
 	about.Load()
 	debug.Load()
 	register.Load()
+	verifyemail.Load()
 	login.Load()
 	home.Load()
 	static.Load()

@@ -14,13 +14,13 @@ import (
 	"github.com/blue-jay/core/router"
 	"github.com/blue-jay/core/view"
 
+	"github.com/gocraft/dbr"
 	"github.com/gorilla/sessions"
-	"github.com/jmoiron/sqlx"
 )
 
 var (
 	configInfo env.Info
-	dbInfo     *sqlx.DB
+	dbInfo     *dbr.Connection
 
 	mutex sync.RWMutex
 )
@@ -35,7 +35,7 @@ func StoreConfig(ci env.Info) {
 
 // StoreDB stores the database connection settings so controller functions can
 // access them safely.
-func StoreDB(db *sqlx.DB) {
+func StoreDB(db *dbr.Connection) {
 	mutex.Lock()
 	dbInfo = db
 	mutex.Unlock()
@@ -49,7 +49,7 @@ type Info struct {
 	W      http.ResponseWriter
 	R      *http.Request
 	View   view.Info
-	DB     *sqlx.DB
+	DB     *dbr.Session
 }
 
 // Context returns the application settings.
@@ -66,6 +66,11 @@ func Context(w http.ResponseWriter, r *http.Request) Info {
 	}
 
 	mutex.RLock()
+	// If dbInfo wasn't stored, no need to create a new db session.
+	var db *dbr.Session
+	if dbInfo != nil {
+		db = dbInfo.NewSession(nil)
+	}
 	i := Info{
 		Config: configInfo,
 		Sess:   sess,
@@ -73,7 +78,7 @@ func Context(w http.ResponseWriter, r *http.Request) Info {
 		W:      w,
 		R:      r,
 		View:   configInfo.View,
-		DB:     dbInfo,
+		DB:     db,
 	}
 	mutex.RUnlock()
 
@@ -84,7 +89,7 @@ func Context(w http.ResponseWriter, r *http.Request) Info {
 func Reset() {
 	mutex.Lock()
 	configInfo = env.Info{}
-	dbInfo = &sqlx.DB{}
+	dbInfo = &dbr.Connection{}
 	mutex.Unlock()
 }
 

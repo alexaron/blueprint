@@ -1,0 +1,38 @@
+package: github.com/blue-jay/blueprint
+import:
+- package: github.com/blue-jay/core
+  subpackages:
+  - asset
+  - email
+  - flash
+  - form
+  - generate
+  - jsonconfig
+  - pagination
+  - passhash
+  - router
+  - server
+  - session
+  - storage/driver/mysql
+  - view
+  - xsrf
+- package: github.com/go-sql-driver/mysql
+  version: ^1.3.0
+- package: github.com/gorilla/context
+  version: ^1.1.0
+- package: github.com/gorilla/csrf
+  version: ^1.5.0
+- package: github.com/gorilla/sessions
+  version: ^1.1.0
+- package: github.com/husobee/vestigo
+  version: master
+- package: github.com/jmoiron/sqlx
+- package: github.com/gocraft/dbr
+  version: ^2.1.0
+- package: github.com/jackc/pgx
+  version: ^2.10.0
+- package: github.com/mattes/migrate
+  version: ^3.0.0
+- package: github.com/gocraft/health
+- package: gopkg.in/gomail.v2
+  version: ^2.0.0
