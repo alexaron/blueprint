@@ -26,9 +26,10 @@ import:
   version: ^1.1.0
 - package: github.com/husobee/vestigo
   version: master
-  # DEPRECATED: Edit sqlx out over time.
 - package: github.com/jmoiron/sqlx
 - package: github.com/gocraft/dbr
   version: ^2.1.0
 - package: github.com/jackc/pgx
   version: ^2.10.0
+- package: github.com/mattes/migrate
+  version: ^3.0.0
