@@ -1,5 +1,5 @@
-hash: 873817dc763b2f496843edf9966f570dc05ec6f2e2fccad8995d7569a8c71d7b
-updated: 2017-05-05T11:44:31.740485012+07:00
+hash: be173e85d03c5d85524dbc639ba64b026399cbc511bfe3adb4984d856bc79799
+updated: 2017-05-05T13:12:27.239510121+07:00
 imports:
 - name: github.com/blue-jay/core
   version: a77540ec92c68c34c9c4dfa83ab700303fcb12c0
@@ -26,6 +26,8 @@ imports:
   version: b2f0ffcef2a64c0729d5818e103bc019caed7b22
   subpackages:
   - dialect
+- name: github.com/gocraft/health
+  version: 25b40f8580168c1f905a6dba35d471cdc51ca629
 - name: github.com/gorilla/context
   version: 1ea25387ff6f684839d82767c1733ff4d4d15d0a
 - name: github.com/gorilla/csrf
@@ -44,8 +46,17 @@ imports:
   version: d9bd385d68c068f1fabb5057e3dedcbcbb039d0f
 - name: github.com/justinas/alice
   version: 1051eaf52fcafdd87ead59d28b065f1fcb8274ec
+- name: github.com/lib/pq
+  version: 2704adc878c21e1329f46f6e56a1c387d788ff94
+  subpackages:
+  - oid
 - name: github.com/mattes/migrate
   version: 1676a902f2e5c1be1a98d1a1fa3ea0fd6d1c2621
+  subpackages:
+  - database
+  - database/postgres
+  - source
+  - source/file
 - name: github.com/pkg/errors
   version: c605e284fe17294bda444b34710735b29d1a9d90
 - name: golang.org/x/crypto
@@ -53,4 +64,6 @@ imports:
   subpackages:
   - bcrypt
   - blowfish
+- name: gopkg.in/gomail.v2
+  version: 81ebce5c23dfd25c6c67194b37d3dd3f338c98b1
 testImports: []
