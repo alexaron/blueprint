@@ -7,37 +7,58 @@ import (
 
 	"github.com/blue-jay/blueprint/model/note"
 	"github.com/blue-jay/blueprint/model/user"
-	"github.com/blue-jay/core/storage/migration/mysql"
 
 	"github.com/blue-jay/blueprint/lib/db"
+	"github.com/blue-jay/blueprint/lib/env"
 	"github.com/gocraft/dbr"
-	"github.com/jmoiron/sqlx"
 )
 
-var (
-	testDb *dbr.Session
+var dbTestSess *dbr.Session
+
+const (
+	TestDatabase = "_test_blueprint"
 )
 
 // TestMain runs setup, tests, and then teardown.
 func TestMain(m *testing.M) {
 	setup()
-	returnCode := m.Run()
-	teardown()
-	os.Exit(returnCode)
+	os.Exit(m.Run())
 }
 
 // setup handles any start up tasks.
 func setup() {
-	_, conf := mysql.SetUp("../../env.json.example", "database_test")
+	info, err := env.LoadConfig("../../env.json")
+	if err != nil {
+		panic("Error loading config: " + err.Error())
+	}
 
-	// Connect to the database
-	d, _ := db.Connect(conf.Info)
-	testDb = d.NewSession(nil)
-}
+	// Connecting to the existing database and creating a test one.
+	dbConn, err := db.Connect(info.PostgreSQL)
+	if err != nil {
+		panic("Error connecting to the existing database: " + err.Error())
+	}
 
-// teardown handles any clean up tasks.
-func teardown() {
-	mysql.TearDown(sqlx.NewDb(testDb.DB, "mysql"), "database_test")
+	// First - drop an existing TestDatabase and then create a new one.
+	// This way you'll have results after running tests at hand.
+	if _, err := dbConn.Exec("DROP DATABASE IF EXISTS " + TestDatabase); err != nil {
+		panic("Error dropping test database: " + err.Error())
+	}
+	if _, err := dbConn.Exec("CREATE DATABASE " + TestDatabase); err != nil {
+		panic("Error creating test database: " + err.Error())
+	}
+
+	// Connecting to the newly created test database.
+	info.PostgreSQL.Database = TestDatabase
+	testDbConn, err := db.Connect(info.PostgreSQL)
+	if err != nil {
+		panic("Error connecting to TestDatabase: " + err.Error())
+	}
+	dbTestSess = testDbConn.NewSession(nil)
+
+	// And running migrations.
+	if err := db.MigrateUp(dbTestSess, info.PostgreSQL.Database); err != nil {
+		panic("Error running migrations: " + err.Error())
+	}
 }
 
 // TestComplete
@@ -45,21 +66,21 @@ func TestComplete(t *testing.T) {
 	data := "Test data."
 	dataNew := "New test data."
 
-	result, err := user.Create(testDb, "John", "Doe", "jdoe@domain.com", "p@$$W0rD")
+	result, err := user.Create(dbTestSess, "John", "Doe", "jdoe@domain.com", "p@$$W0rD")
 	if err != nil {
-		t.Error("could not create user:", err)
+		t.Fatal("could not create user:", err)
 	}
 
 	uID, err := result.LastInsertId()
 	if err != nil {
-		t.Error("could not convert user ID:", err)
+		t.Fatal("could not convert user ID:", err)
 	}
 
 	// Convert ID to string
 	userID := fmt.Sprintf("%v", uID)
 
 	// Create a record
-	result, err = note.Create(testDb, data, userID)
+	result, err = note.Create(dbTestSess, data, userID)
 	if err != nil {
 		t.Error("could not create record:", err)
 	}
@@ -74,7 +95,7 @@ func TestComplete(t *testing.T) {
 	lastID := fmt.Sprintf("%v", ID)
 
 	// Select a record
-	record, _, err := note.ByID(testDb, lastID, userID)
+	record, _, err := note.ByID(dbTestSess, lastID, userID)
 	if err != nil {
 		t.Error("could not retrieve record:", err)
 	} else if record.Name != data {
@@ -82,13 +103,13 @@ func TestComplete(t *testing.T) {
 	}
 
 	// Update a record
-	result, err = note.Update(testDb, dataNew, lastID, userID)
+	result, err = note.Update(dbTestSess, dataNew, lastID, userID)
 	if err != nil {
 		t.Error("could not update record:", err)
 	}
 
 	// Select a record
-	record, _, err = note.ByID(testDb, lastID, userID)
+	record, _, err = note.ByID(dbTestSess, lastID, userID)
 	if err != nil {
 		t.Error("could not retrieve record:", err)
 	} else if record.Name != dataNew {
@@ -96,7 +117,7 @@ func TestComplete(t *testing.T) {
 	}
 
 	// Delete a record by ID
-	result, err = note.DeleteSoft(testDb, lastID, userID)
+	result, err = note.DeleteSoft(dbTestSess, lastID, userID)
 	if err != nil {
 		t.Error("could not delete record:", err)
 	}
