@@ -5,7 +5,7 @@
 
 Blueprint for your next web application in Go.
 
-Quick Start Website with Jay:
+## Quick Start Website with Jay
 
 (as this is a fork, installation steps are a bit different)
 
@@ -22,6 +22,18 @@ Quick Start Website with Jay:
 1. Navigate to the register page at http://localhost/register and create a new user.
 1. You can now login at http://localhost/login.
 
+## Running Tests
+
+Before running tests ensure that your postgres user can create and drop other databases.
+You can get all the correct settings with a single command, which is also convenient for development:
+
+    docker run -p 5432:5432 -e POSTGRES_DB=blueprint -e POSTGRES_USER=blueprint postgres:9.6
+
+Tests themselves are run with this command:
+
+    go test $(glide novendor)
+
+## Original Information
 
 Documentation available here: https://blue-jay.github.io/
 
