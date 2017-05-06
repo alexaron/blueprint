@@ -70,12 +70,16 @@ func ByUserIDCount(db *dbr.Session, userID string) (int, error) {
 }
 
 // Create adds an item.
-func Create(db *dbr.Session, name string, userID string) (sql.Result, error) {
-	return db.
-		InsertInto(table).
-		Columns("name", "user_id").
-		Values(name, userID).
-		Exec()
+func Create(db *dbr.Session, name string, userID string) (uint32, error) {
+	var id uint32
+	// PostgreSQL doesn't support LastInsertID, only RETURNING.
+	err := db.QueryRow(`
+		INSERT INTO "`+table+`"
+			(name, user_id)
+			VALUES ($1, $2)
+			RETURNING id
+	`, name, userID).Scan(&id)
+	return id, err
 }
 
 // Update makes changes to an existing item.

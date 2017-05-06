@@ -54,15 +54,16 @@ func ByCode(db *dbr.Session, code string) (Item, bool, error) {
 }
 
 // Create creates user.
-func Create(db *dbr.Session, firstName, lastName, email, password string) (sql.Result, error) {
-	// Using raw SQL statement because LastInsertID is used in the outside
-	// and PostgreSQL only supports it when the RETURNING statement is provided.
-	return db.InsertBySql(`
+func Create(db *dbr.Session, firstName, lastName, email, password string) (uint32, error) {
+	var id uint32
+	// PostgreSQL doesn't support LastInsertID, only RETURNING.
+	err := db.QueryRow(`
 		INSERT INTO "`+table+`"
 			(first_name, last_name, email, password, verification_code)
-			VALUES (?, ?, ?, ?, ?)
+			VALUES ($1, $2, $3, $4, $5)
 			RETURNING id
-	`, firstName, lastName, email, password, pseudoSha2()).Exec()
+	`, firstName, lastName, email, password, pseudoSha2()).Scan(&id)
+	return id, err
 }
 
 // Verify marks a user as verified.
