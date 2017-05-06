@@ -5,9 +5,19 @@
 
 Blueprint for your next web application in Go.
 
-## Quick Start Website with Jay
+###Differences to upstream project
+This is a fork with the following changes: 
 
-(as this is a fork, installation steps are a bit different)
+1. Glide added for dependency management
+1. Ported from mysql to postgres using dbr & github.com/jackc/pgx 
+1. Email verification (using gomail) of user account before login
+1. gohealth added but not yet intergrated. 
+1. migrations using jay are now broken as jay does not support postgres. github.com/mattes/migrate added instead. 
+
+
+## Quick Start Website
+
+(installation steps are a bit different to the upstream project)
 
 1. To download Blueprint, clone this repo into $GOPATH/src/github.com/blue-jay/blueprint
 1. To download Jay, run the following command: go get github.com/blue-jay/jay
@@ -32,6 +42,8 @@ You can get all the correct settings with a single command, which is also conven
 Tests themselves are run with this command:
 
     go test $(glide novendor)
+
+Two batch commands are provided, one for windows (tests.bat) and one for linux (tests.sh), which run all tests and exclude the vendor folder. 
 
 ## Original Information
 
