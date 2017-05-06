@@ -66,31 +66,18 @@ func TestComplete(t *testing.T) {
 	data := "Test data."
 	dataNew := "New test data."
 
-	result, err := user.Create(dbTestSess, "John", "Doe", "jdoe@domain.com", "p@$$W0rD")
+	uID, err := user.Create(dbTestSess, "John", "Doe", "jdoe@domain.com", "p@$$W0rD")
 	if err != nil {
 		t.Fatal("could not create user:", err)
 	}
-
-	uID, err := result.LastInsertId()
-	if err != nil {
-		t.Fatal("could not convert user ID:", err)
-	}
-
-	// Convert ID to string
+	// Convert uID to string
 	userID := fmt.Sprintf("%v", uID)
 
 	// Create a record
-	result, err = note.Create(dbTestSess, data, userID)
+	ID, err := note.Create(dbTestSess, data, userID)
 	if err != nil {
 		t.Error("could not create record:", err)
 	}
-
-	// Get the last ID
-	ID, err := result.LastInsertId()
-	if err != nil {
-		t.Error("could not convert ID:", err)
-	}
-
 	// Convert ID to string
 	lastID := fmt.Sprintf("%v", ID)
 
@@ -103,7 +90,7 @@ func TestComplete(t *testing.T) {
 	}
 
 	// Update a record
-	result, err = note.Update(dbTestSess, dataNew, lastID, userID)
+	result, err := note.Update(dbTestSess, dataNew, lastID, userID)
 	if err != nil {
 		t.Error("could not update record:", err)
 	}
